@@ -34,7 +34,7 @@ This example covers all the examples given above, with additional topics includi
 
 4.  [HTML Options Checklist:](https://quarto.org/docs/reference/formats/html.html) A handy checklist of all the various different features available for HTML output.
 
-5.  [Quarto Document Example:](https://quarto.org/docs/get-started/hello/rstudio.html) This includes an example file `Download hello.qmd` from the Quarto developers themselves with all the various different features Quarto can do.
+5.  [Quarto Document Example:](https://quarto.org/docs/get-started/hello/rstudio.html) This includes an example file [`Download hello.qmd`](https://quarto.org/docs/get-started/hello/rstudio/_hello.qmd) from the Quarto developers themselves with all the various different features Quarto can do.
 
 6.  [PDF Basics for Quarto:](https://quarto.org/docs/output-formats/pdf-basics.html) Information on how to write up a basic PDF rendered document from Quarto within RStudio. This link also explains other features that may need to be installed (e.g. LaTeX) in order to output to PDF.
 
