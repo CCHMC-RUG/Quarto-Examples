@@ -26,6 +26,17 @@ This example covers all the examples given above, with additional topics includi
   - Inserting Images and PDF files
 
 #### Further Reading
+1.  [Quarto Overview:](https://quarto.org/) The introduction website for users who are new to Quarto and want to check out everything that it has to offer.
+
+2.  [Quarto for RStudio](https://quarto.org/docs/tools/rstudio.html) Information on how to get started using Quarto within RStudio.
+
+3.  [HTML Basics for Quarto:](https://quarto.org/docs/output-formats/html-basics.html) Information on how to write up a basic HTML rendered document from Quarto within RStudio.
+
+4.  [HTML Options Checklist:](https://quarto.org/docs/reference/formats/html.html) A handy checklist of all the various different features available for HTML output.
+
+5.  [Quarto Document Example:](https://quarto.org/docs/get-started/hello/rstudio.html) This includes an example file `Download hello.qmd` from the Quarto developers themselves with all the various different features Quarto can do.
+
+6.  [PDF Basics for Quarto:](https://quarto.org/docs/output-formats/pdf-basics.html) Information on how to write up a basic PDF rendered document from Quarto within RStudio. This link also explains other features that may need to be installed (e.g. LaTeX) in order to output to PDF.
 
 ## Quarto Presentation
 ### `quarto_presentation.QMD` File
