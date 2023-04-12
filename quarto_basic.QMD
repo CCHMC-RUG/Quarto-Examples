@@ -95,4 +95,4 @@ The Fundamental Theorem of Calculus is given by @eq-FTC.
 
 ## Learn More
 
-For more examples, see my `quarto_document.qmd` file posted on GitHub [here](https://github.com/CCHMC-RUG/intro-to-quarto).
+For more examples, see my `quarto_document.qmd` file posted on GitHub [here](https://github.com/CCHMC-RUG/Quarto-Examples).
