@@ -1,0 +1,495 @@
+---
+title: "A Brief Quarto Presentation Overview"
+author:
+  - name: Stephen Colegate
+    email: stephen.colegate@cchmc.org
+    affiliation: Cincinnati Childrens Hospital Medical Center
+date: "4/12/2023"
+format:
+  revealjs:
+    incremental: true
+    slide-number: true
+    transition: fade
+    transition-speed: slow
+editor: visual
+---
+
+# Overview
+
+## Outline {#sec-outline}
+
+1.  Introduction to quarto presentations.
+
+2.  Some customization options, including layouts, headings, bullet point lists, backgrounds, and themes.
+
+3.  Demonstrate how to display R code and output.
+
+4.  Inserting equations, tables, and figures.
+
+5.  Other topics and additional resources.
+
+## Introduction {#sec-intro}
+
+-   quarto can create both documents and presentations.
+
+-   Easiest format to start with: `revealjs`
+
+-   Other formats requiring Microsoft Office and/or LaTeX: `pptx`, `beamer`
+
+-   Functions similar to a quarto document.
+
+<!--# This is a comment. Anything appearing here will not show in the presentation. Comments are for the RStudio user only. -->
+
+## Rendering {#sec-rendering}
+
+-   Click on `Render` to view the presentation.
+
+    -   Opens in a HTML viewer.
+
+    -   View the **Background Jobs** tab in RStudio.
+
+    -   Explore layout of presentation.
+
+-   Making changes in the presentation.
+
+    -   Do not close the presentation in the HTML viewer.
+
+    -   Make your changes in quarto.
+
+    -   Click on `Render` to update the changes.
+
+    -   View your modifications in the HTML viewer.
+
+# Presentation Customization
+
+## Layout {#sec-layout}
+
+-   **Visual** side vs. **Source** side.
+
+-   All typing should be made on the **Visual** side.
+
+-   **Source** side available for tweaking.
+
+-   The default layout is a standard widescreen presentation but there are other options to adjust how information is presented.
+
+    -   **Example:** [Multiple Columns](https://quarto.org/docs/presentations/revealjs/#multiple-columns) layout.
+
+<!--# You can link to websites within the presentation for the user to click on and learn more information. -->
+
+## Headings {#sec-heading}
+
+-   Headings represent titles.
+
+    -   **Heading 1:** Inserts a title slide
+
+    -   **Heading 2:** Title of a new slide
+
+    -   **Heading 3:** Title of a new section within a slide.
+
+-   Headings have attributes that can be referenced.
+
+    -   Use `#sec-(name)` to reference a slide title.
+
+-   The following are examples demonstrating headers.
+
+# Header Examples
+
+-   This is Header 1, mainly used for title slides to start new sections.
+
+## Header 2
+
+-   Header 2 is used to title slides.
+
+### This is Header 3
+
+-   Header 3 is used to subtitle.
+
+#### This is Header 4
+
+-   Headers 4-6 adjust the size of the subtitle.
+
+##### This is Header 5
+
+-   Not much difference from Header 4.
+
+###### This is Header 6
+
+-   Again, really no difference from Header 4 or 5.
+
+## Bullet Points {#sec-bullet}
+
+-   Use `-` to start a bullet point list.
+
+    -   Numbered list start with `1.`
+
+-   By default, all bullets will display when the slide appears.
+
+    -   Use `incremental: true` under `format: revealjs:` in the YAML header to make the bullet points increment when advancing the presentation.
+
+-   Sub-bullet lists are possible.
+
+    -   This is a sub-list. Press `TAB` to start a sub-list.
+
+        -   This is a sub-sub-list. Again, press `TAB` to indent the list.
+
+            -   This is a sub-sub-sub-list. And so on...
+
+-   Be wary of how many bullet points you have on one slide.
+
+    -   For example, this bullet point gets cut off by default in Google Chrome.
+
+## Bullet Points
+
+::: nonincremental
+-   Use the HTML viewer to determine if additional slides are needed.
+
+-   It is possible to make a list nonincremental and incremental by changing the environment of the list.
+
+    -   Change the default global behavior with the `incremental` option.
+
+    -   Change the individual list behavior.
+
+        -   Use `:::{.incremental} :::` for incremental lists.
+
+        -   Use `:::{.nonincremental} :::` for non-incremental lists.
+:::
+
+## Backgrounds {background="#43464B"}
+
+-   Set the `background` attribute on a slide to change to the background color.
+
+    -   All CSS color formats are supported.
+    -   Notice this also changes the color of the text.
+
+-   Different background transitions are available via the `background-transition` option.
+
+::: footer
+Learn more: [Slide Backgrounds](https://quarto.org/docs/presentations/revealjs/#color-backgrounds)
+:::
+
+## Transitions & Slide Numbers
+
+-   By default, quarto does not include any transitions between slides.
+
+-   The `auto-animate="true"` option within a slide is best suited for slides displaying code only.
+
+    -   Cannot easily be attributed.
+
+-   You can adjust the kind of transition and the transition speed in the YAML header.
+
+    -   **Example:** `transition: fade` and `transition-speed: slow`.
+
+-   You can also add an option `slide-number: true` in the YAML header to add slide numbers to each slide.
+
+::: footer
+Learn more: [Slide Transitions](https://quarto.org/docs/presentations/revealjs/advanced.html#slide-transitions)
+:::
+
+## Themes {#sec-themes}
+
+-   This text is the default theme when you first create a quarto presentation.
+
+-   You can change the **HTML theme** for different font sizes, font colors, line stretches, margins, and background colors.
+
+-   Learn more [here](https://quarto.org/docs/output-formats/html-themes.html){preview-link="true"}.
+
+    <!--# Add the option {preview-link="true"} at the end of the url to allow the user to open the website within their HTML viewer without having to close your presentation. -->
+
+# Code and Output
+
+## Coding {#sec-coding}
+
+-   Code can be displayed nicely in a presentation.
+
+    -   Over 20 syntax highlighting themes available.
+
+    -   Default theme optimized for accessibility.
+
+-   To insert a code chunk, click `INSERT` and then click `CODE CHUNK`.
+
+    -   Define the type of code you are inserting: R, Python, Java, SQL, Stan, etc.
+
+-   By default, the result of R code is displayed, not the R code itself.
+
+::: footer
+Learn more: [Executable Code](https://quarto.org/docs/presentations/revealjs/#executable-code)
+:::
+
+<!--# You can insert footnotes to reference a website at the bottom of the slides to give the user an option to learn more.  -->
+
+## Example R Code Output {#sec-rout}
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-pos: ht
+#| fig-cap: "The Sampling Distribution."
+#| fig-cap-location: bottom
+#| label: fig-sampling
+#| echo: false
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ", theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+::: footer
+Learn more: [Executable Code](https://quarto.org/docs/presentations/revealjs/#executable-code)
+:::
+
+## Code Chunk Options {#sec-code_options}
+
+-   Just like R Markdown, code chunk options are available to change its behavior.
+
+    -   Use `#| eval: false` to hide output.
+
+    -   Use `#| echo: true` to display code.
+
+    -   All the code chunk options discussed with the quarto document example are still applicable.
+
+::: footer
+Learn more: [Syntax Highlighting](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Example R Code {#sec-r_code}
+
+```{r}
+#| eval: false
+#| echo: true
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ", theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+-   Creates the plot on the [Example R Code Output](#sec-rout) slide.
+
+    <!--# Insert cross-references by going to INSERT+LINK+ATTRIBUTES and then selecting the heading you wish to reference. -->
+
+::: footer
+Learn more: [Syntax Highlighting](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Highlighting Code {#sec-code_highlight}
+
+-   You can highlight specific lines of code for emphasis.
+
+-   Incrementally highlight additional lines.
+
+-   Use `#|` `code-line-numbers:` to reference which lines of code to highlight.
+
+    -   Specify incremental highlights with \| separating code lines.
+
+::: footer
+Learn more: [Line Highlighting](https://quarto.org/docs/presentations/revealjs/#line-highlighting)
+:::
+
+## Highlight Example
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: 1-5|7-13
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ", theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+::: footer
+Learn more: [Line Highlighting](https://quarto.org/docs/presentations/revealjs/#line-highlighting)
+:::
+
+## Code Animations {#sec-animation}
+
+-   You can also animate between code blocks to show changes in code using the `auto-animate="true"` option within a slide.
+-   This option will create a smooth transition to the next slide.
+-   Each step in the animation requires an additional slide.
+-   Name the subsequent slides the same for consistency.
+
+::: footer
+Learn more: [Code Animations](https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations)
+:::
+
+## Code Animation Example {auto-animate="true"}
+
+```{r}
+#| eval: false
+#| echo: true
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+```
+
+::: footer
+Learn more: [Code Animations](https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations)
+:::
+
+## Code Animation Example {auto-animate="true"}
+
+```{r}
+#| eval: false
+#| echo: true
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ", theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+::: footer
+Learn more: [Code Animations](https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations)
+:::
+
+# Equations, Tables, and Figures
+
+## Equations {#sec-equations}
+
+-   Equations are rendered to HTML using [MathJax](https://www.mathjax.org/){preview-link="true"}.
+-   The easiest way to insert equations into a quarto presentation is on the **Visual** side.
+-   **Inline Math** equations example: $Pr(\theta | y) \propto Pr(y | \theta) Pr(\theta)$
+-   **Display Math** equations example: $$Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}$$ {#eq-bayes}
+-   When you type an equation, a visualization of what it will appear like will show on the **Visual** side.
+-   **Display Math** equations can be numbered and cross-referenced throughout the presentation.
+
+## Equations
+
+-   Equations can also be cross-referenced by changing the attribute of the equation.
+
+-   Use `#eq-(name)` to reference equations throughout the presentation.
+
+    -   **Example:** See @eq-bayes for the definition of Bayes Rule.
+
+-   Only applies to **Display Math** equations.
+
+-   Using attributes is handy to reference slide headings, equations, tables, and figures regardless of where they appear in the presentation.
+
+    -   **Example:** See @fig-sampling on the [Example R Code Output](@sec-rout) for a figure reference.
+
+## Tables {#sec-tables}
+
+-   Basic tables can be included within a quarto presentation.
+
+    -   Supports LaTeX equations, text alignment, custom cell sizes, headers, and captions.
+
+        -   The cell sizes can vary depending on how the **Visual** side renders the table.
+
+    -   Does not support cell merging, borders, shading, and custom header and caption placement.
+
+-   Tables can be cross-referenced throughout the presentation.
+
+-   Can also support tables created by LaTeX.
+
+-   Does not support custom borders,
+
+::: footer
+Learn more: [Tables](https://quarto.org/docs/authoring/tables.html)
+:::
+
+## Basic Table Example {#sec-basictable}
+
++------------+------------+-------------+-------------+----------------+
+|            | Cutoff     | Sensitivity | Specificity | AUC            |
++============+:==========:+:===========:+:===========:+:==============:+
+| Overall    | 0.489      | 0.690       | 0.667       | 0.731          |
+|            |            |             |             |                |
+|            |            |             |             | (0.729, 0.732) |
++------------+------------+-------------+-------------+----------------+
+| Whites     | 0.489      | 0.690       | 0.668       | 0.731          |
+|            |            |             |             |                |
+|            |            |             |             | (0.730, 0.733) |
++------------+------------+-------------+-------------+----------------+
+| Blacks     | 0.511      | 0.667       | 0.659       | 0.712          |
+|            |            |             |             |                |
+|            |            |             |             | (0.706, 0.718) |
++------------+------------+-------------+-------------+----------------+
+| Other      | 0.534      | 0.694       | 0.663       | 0.730          |
+|            |            |             |             |                |
+|            |            |             |             | (0.722, 0.738) |
++------------+------------+-------------+-------------+----------------+
+
+: My 3-month FIES Predictions
+
+## Figures
+
+-   You can also include figures to display inside your quarto presentation.
+
+-   The easiest way is to use the navigation tools on the **Visual** side to include images.
+
+-   You can also reference figures too.
+
+    -   Example: @fig-textbook on the [Example Figure] slide is the inspiration for my R analysis for this document.
+
+-   You can customize how the figure looks by playing with its attributes.
+
+::: footer
+Learn more: [Absolute Position](https://quarto.org/docs/presentations/revealjs/advanced.html#absolute-position)
+:::
+
+## Example Figure
+
+![Textbook for an Introductory Bayesian Statistics Course.](textbookimage.png){#fig-textbook fig-align="center" width="6in"}
+
+# Other Resources
+
+## Advanced Topics
+
+-   Change the background of a slide to a custom image.
+
+-   Tabsets.
+
+-   Interactive slides (Jupyter widgets and htmlwidgets).
+
+-   Compatible with Observable and Shiny applications.
+
+-   Footers and logos.
+
+-   Auto-slides.
+
+-   Multiplex.
+
+## Links {#sec-links}
+
+1.  [`Revealjs` Overview:](https://quarto.org/docs/presentations/revealjs/){preview-link="true"} An overview how to set up quarto presentations with examples, source code, and various themes to choose from.
+
+2.  [`Revealjs` Basics:](https://quarto.org/docs/presentations/revealjs/){preview-link="true"} Start here to learn how to create a quarto presentation with the `revealjs` setup.
+
+3.  [Advanced Reveal:](https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations){preview-link="true"} Info on making slide transitions look professional.
+
+4.  [Quarto Presentation Source Code Example:](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd){preview-link="true"} Source code demonstrating many examples shown in this presentation.
+
+5.  [Presenting Slides:](https://quarto.org/docs/presentations/revealjs/presenting.html){preview-link="true"} Gives tips with how to get the most out of your presentation.
