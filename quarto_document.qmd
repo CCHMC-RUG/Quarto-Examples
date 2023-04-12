@@ -1,0 +1,342 @@
+---
+title: "A Quarto Document Example"
+author:
+  - name: Stephen Colegate
+    email: stephen.colegate@cchmc.org
+    affiliation: Cincinnati Childrens Hospital Medical Center
+date: "4/12/2022"
+abstract-title: My Abstract
+abstract: 
+    The purpose of this document is to demonstrate common uses of the new quarto software developed by RStudio in 2022. This document was developed for a "show and tell" presentation for Dr. Cole Brokamp's weekly meeting that took place online via Zoom on Wednesday, September 7, 2022. This example showcases how to setup an example rendered document using the YAML header including a Title Page, Abstract, Table of Contents, List of Figures, List of Tables, and the body text. Demonstrations include writing code chucks, options for displaying code chuck output, cross-referencing, insertion of images and figures from various files, and a bibliography.
+bibliography: exampleref.bib
+biblio-title: References
+format: 
+  pdf: 
+    documentclass: report
+    fontsize: 12pt
+    classoption: [twocolumn, landscape]
+    toc: true
+    lof: true
+    lot: true
+    number-sections: true
+    geometry:
+      - top=30mm
+      - left=20mm
+      - heightrounded
+    fontfamily: libertinus
+    colorlinks: true
+    cite-method: biblatex
+---
+
+# Introduction to Quarto {#sec-intro}
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>. The above section is the YAML editor, which defines the document properties. This will not be shown in the final output file. In this example, the produced output will be a .pdf file with a title page, a list of tables and a list of figures table, and whose margins are defined in the YAML header. The text size will be 12 point, the paper layout will be in landscape, and the text will be rendered into two columns. There are many options to discover using the YAML editor and many pertain the the HTML document class. If you are familiar with LaTeX, many of these features will look identical. Refer to the [Quarto Guide](https://quarto.org/docs/guide/) if you want more information on how quarto works. I referenced this manual a ton when creating this simple demonstration document.
+
+Quarto and RMarkdown have similar properties but how they are approached are vastly different. With RMarkdown, one must be knowledgeable with LaTeX and source code. While Quarto also has the option to edit the source code, Quarto strongly encourages you to focus on the **Visual** side of things. After all, this is how your document will look once it is rendered (the equivalent of compiling in RMarkdown). When you click the **Render** button at the top of the page, RStudio will render your quarto document and display it in your favorite web browser (e.g. Google Chrome). You can then review the document properties and make changes in the **Visual** side of things in RStudio. Very rarely does one need to look in the **Source** side of the document, as this only includes R code used to compile the document. Unlike RMarkdown, which extensively uses **Source** to create the document, the same editing changes can be made in quarto in the **Visual** side. Therefore, it is much easier to locate where changes are need to be made in your document in quarto than in RMarkdown. It is easier to type in the **Visual** side of things instead of the **Source** side.
+
+Quarto comes with its own spellcheck editor. LaTeX code, which is the heart of a RMarkdown document, does not play well with quarto. While it is possible, I would not recommend inserting LaTeX commands directly in the **Source** side of quarto. You will find out the hard way like I did what can happen if quarto does not recognize something: you will be unable to render the quarto document without any explanation of what went wrong! Everything you would need to insert into a document that LaTeX codes were required for (e.g. tables, figures) can be done under the **Insert** tab in RStudio. The necessity of LaTeX codes is greatly diminished with quarto, although it might still be implemented, if needed. But try the dashboard on the **Visual** side first!
+
+The `RMDexample.RMD` file gives a demonstration on what is possible with RMarkdown. It is adapted from a presentation I gave for a Spring 2021 *Applied Bayesian Analysis* class at the University of Cincinnati. The file shows examples of common tasks you can do in an RMarkdown document such as add comments, tables, figures, plots, inserting R code chunks, and various options to render elements inside the document to suit your needs. The purpose of this document is to demonstrate how these same tasks can be accomplished in quarto. I will go through the same demonstrations as I did in the `RMDexample.RMD` file, except all the changes will be implemented on the **Visual** side. I will stay away from having to switch over to the **Source** side as much as possible. By comparing how tasks are accomplished in quarto versus RMarkdown, you will quickly see how quarto can be beneficial for novice and intermediate users of RStudio to create beautiful documents without having to resort to the complexity, cryptic, and often difficult to learn LaTeX code to get simple things included in the document.
+
+<!--# This is a comment. At any point within your document, if you need to make a note to yourself (e.g. code not working, stuff to add later, etc.) when working on a quarto document, use the CTRL+SHIFT+C shortcut to insert a comment. Comments are highlighted in tan and do not show in the rendered document. This is equivalent to the # symbol in base R. -->
+
+# Running Code {#sec-runcode}
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+# My R code goes here!
+```
+
+In a RMarkdown document, you place chunk options after the `r` between the `{}` brackets. While this is fine for basic options, this can get quite cluttered, especially since captions for figures and tables must also go on this line too. Quarto adds options using the `#|` operator. This tells quarto that an option will be defined for the specific R chunk. The writer then types the option, followed by a `:` symbol, and then the setting the option should be set to. These options are only for the **Visual** side ONLY. The options will not be shown in the final rendering of the document.
+
+<!--# Sometimes you may want to start a new section on a fresh page. To do that, use the LaTeX command \newpage. -->
+
+\newpage
+
+In this example, the following R code will be displayed:
+
+```{r}
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ",
+                           theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+If you click on the play button, quarto will compile the R code of the selected chunk and show you the output without having to render the document. Render the document by clicking the Render button at the top to compile the document.
+
+But let's say that I only want to show the plot, not the R code that creates it. Use the option `echo: false` to disable the printing of code. Notice when you start typing the `#|` in the chunk, RStudio automatically pops up a drop-down menu of several options you have at your disposal. With `echo: false`, only the output will be displayed, not the R code itself. Make sure there is a space between the `|` and the word `echo` as well as a space between the `:` and the word `false`. Otherwise quarto will ignore your chunk option.
+
+```{r}
+#| echo: false
+
+# Define the parameters (assumed)
+theta <- seq(0,1,length=500)
+a <- 2
+b <- 20
+n <- 20
+
+# Plot the prior distribution
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p(", theta, ")")),
+     main=expression(paste("Prior Distribution ",
+                           theta," ~ beta(a, b)")),
+     type="l", lty="dashed", col="gray30", lwd=3)
+```
+
+Now click the Render button. Notice only the plot is displayed, not the R code.
+
+# Adjusting Plots {#sec-adjplot}
+
+There are many options to include when making plots. By using the chunk options available within each code block, you can control things like whether to display code, formatting of images produced by code, and whether to run the code inside of a chunk at all when it is rendered. It is a good idea to test the R code on the **Visual** side before rendering your document. Quarto makes it easy to visualize the possible options available. Rather than list those options on one line, as RMarkdown is set up to do, the options are instead listed in quarto. This is much more convenient, as it allows the user to fine-tune the output they would like to control in the rendered document.
+
+Quarto comes with much better support for cross-referencing items than RMarkdown. With the latter, you mostly use the `\label` and `\ref` LaTeX commands to reference items. While this is still supported by quarto, it is much easier to use quarto's built-in features to reference items in a document. Notice that quarto automatically recognizes the `\` as a special keyword and changes both the font and the color to specifically identify it as a LaTeX command. In general, LaTeX commands still work in quarto, as the example below where a table is created using raw LaTeX code that does not show up on the **Visual** side but does render correctly in the finished document.
+
+The following options to produce the plot adds a figure caption, centers the figure, and resizes the image. This creates @fig-sampling.
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-pos: ht
+#| fig-cap: "The Sampling Distribution."
+#| fig-cap-location: bottom
+#| label: fig-sampling
+#| echo: false
+### Plot the sampling distribution
+
+# Theta=0.05
+y <- seq(0,20,by=1)
+plot(y,dbinom(y,size=20,prob=0.05),
+     xlab="y",ylab=expression(paste("Density p(Y| ", theta, ")")),
+     main=expression(paste("Sampling Distribution p(Y| ",
+                           theta,") ~ binomial(20, ",theta,")")),
+     type="l", col="red", lty="longdash", lwd=2)
+
+# Theta=0.10
+lines(y,dbinom(y,size=20,prob=0.10),
+      type="l", col="green3", lty="solid", lwd=2)
+
+
+# Theta=0.20
+lines(y,dbinom(y,size=20,prob=0.20),
+      type="l", col="blue", lty="dotted", lwd=3)
+
+# Add a legend to the plot
+legend("topright",
+       legend=c(expression(paste(theta,"=0.05  ")),
+                expression(paste(theta,"=0.10  ")),
+                expression(paste(theta,"=0.20  "))),
+       col=c("red","green3","blue"),
+       lwd=2, lty=c("longdash", "solid", "dotted"))
+```
+
+\newpage
+
+## Cross-references {#sec-crossref}
+
+When I cross-reference items within a document such as equations, images, tables, and plots, we use the `@` symbol, followed by the abbreviated reference type (in this case, `fig` for figure) with a unique label separated by a hyphen. With this abbreviation, you do not need to supply the attribute of the item (e.g. Figure, Table, etc.) as they will be provided automatically. Below is an example of a callout, used to highlight something within your rendered document. **You must specify the cross-reference type or quarto will not recognize the item you are referencing!** For example, if you do not supply the `fig-` in the label within the chunk option, quarto will not be able to recognize the item.
+
+Supported items include `eq-` for equations, `fig-` for figures, and `tbl-` for tables. Examples for each are provided in this document. This feature allows the user to number items differently for figures and equations. This is very useful, for if the item gets moved around in the document, the cross-references referring to this item will be updated automatically. Clicking on the number when in the rendered document will automatically take the user directly to the figure.
+
+Here's the posterior distribution to finish this example. @fig-posterior shows the posterior distribution for when the prior distribution for $\theta$, which is treated as a Beta random variable and the data $Y$, which is assumed to be from a Binomial distribution with the probability of success $\theta$ for $n=20$.
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-pos: ht
+#| fig-cap: "The Posterior Distribution."
+#| fig-cap-location: bottom
+#| label: fig-posterior
+#| echo: false
+### Posterior distribution f(theta|y) ~ beta(a+y, n-y+b)
+plot(theta,dbeta(theta,a,b),
+     xlab=expression(theta),
+     ylab=expression(paste("Density p( ", theta, " |Y)")),
+     ylim=c(0,16), main="Prior + Posterior Distribution",
+     type="l", lty="longdash", col="gray30", lwd=3)
+
+# Add a legend
+legend("topright",
+       legend=c(expression(paste("p(", theta, ") [Prior]  ")),
+                expression(paste("p(", theta, "|Y=0) ")),
+                expression(paste("p(", theta, "|Y=5) ")),
+                expression(paste("p(", theta, "|Y=10) ")),
+                expression(paste("p(", theta, "|Y=15) ")),
+                expression(paste("p(", theta, "|Y=20) ")) ),
+       col=c("gray30","red", "tan2", "lightgoldenrod2", "green3", "blue"),
+       lwd=2,lty=c("longdash",rep("solid",5)) )
+
+# Add additional curves based on different Y values
+# Y=0
+y <- 0
+lines(theta, dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="red", lwd=2)
+
+# Y=5
+y <- 5
+lines(theta, dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="tan2", lwd=2)
+
+# Y=10
+y <- 10
+lines(theta, dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="lightgoldenrod2", lwd=2)
+
+# Y=15
+y <- 15
+lines(theta, dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="green3", lwd=2)
+
+# Y=20
+y <- 20
+lines(theta, dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="blue", lwd=2)
+```
+
+\newpage
+
+Inserting equations is easy! You can still use `$` to render equations in-line and use either `\begin{equation}` or the `$$` to insert equations, just as you did with RMarkdown. And just like RMarkdown, the equation is rendered as you type it in, ensuring your LaTeX code looks exactly as it is supposed to be. As we did with figures, you can also reference equations later too by referencing their **Equation ID**: defined by `#eq-` followed by the unique identifier.
+
+$$
+Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}
+$$ {#eq-bayes}
+
+Bayes Theorem, stated by Equation @eq-bayes, states the relationship between the prior distribution of $\theta$, $Pr(\theta)$ , the sampling distribution \$Pr(y\|\\theta)\$, and the posterior distribution $Pr(\theta|y)$ once the sample has been observed. We can simplify this even further, once we realize $Pr(y)$ is just a multiplicative constant as
+
+$$
+Pr(\theta | y) \propto Pr(y | \theta) Pr(\theta)
+$$ {#eq-propbayes}
+
+The $\propto$ symbol in Equation @eq-propbayes makes note the posterior distribution $\theta|Y$ is proportional to the product of the sampling distribution of $Y$ and the prior distribution of $\theta$. Referenced equations in-text turn blue when they are referenced to, using the `@` symbol. Clicking on the equation number will immediately take the reader to the first instance where the equation is defined.
+
+In general, the posterior distribution for different lines can be generated by the following R code. Just simply set the corresponding value of $Y$ you would like to use in the posterior distribution and the corresponding color you would like to use in the plot. Notice here the code is displayed but is not executed.
+
+```{r}
+#| eval: false
+# Y=8
+y <- 8
+lines(theta,
+      dbeta(theta, shape1=a+y, shape2=b+n-y),
+      type="l", col="firebrick1", lwd=2)
+```
+
+When the document is rendered, the R code above will be displayed but nothing will be run. As a quick demonstration, if you click the green play button, you will receive an error message. This error message does not happen if the `eval` option is set to `false` but it will break the document if set to `true` instead.
+
+# Inserting Tables {#sec-tables}
+
+From my own experience, inserting a table inside a RMarkdown document is a nightmare. For example, compare the code that is needed to create @tbl-summary. For LaTeX users, this table isn't so bad to understand. But any missing characters or options can break the table without giving any indication what went wrong. For larger, more complex tables, this code can be very cumbersome to understand. Basically, I would go to a website, such as [this one](https://www.tablesgenerator.com/), to draw the table the way I like it, generate the LaTeX code that creates the table, and then copy the LaTeX code back into my RMarkdown document and check if the table appears correctly in my document. This is not self-intuitive as there should be a way to create tables within the document itself without having to use other software.
+
+Quarto has built-in options to create tables within. You can create simple tables within the quarto environment on the **Visual** side. I have played around with this feature in this document and has potential. However, it is clear this tool is still in its early stages and needs to be fleshed out some. This tool can only create simple tables and only certain document properties support them. I was able to recreate @tbl-summary demonstrated in the RMarkdown document example using this tool but quarto cannot compile the table correctly because the document is in `twocolumn`. On the other hand, since I have already created LaTeX code that generates the table, I can simply copy and paste the code here and quarto will correctly create the table in the rendered document. Quarto should automatically recognize the code format but you can change this by setting the attribute in the code block.
+
+<!--# Use the shortcut CTRL+SHIFT+\ to insert a code block. Specify the type of code you are typing by changing the attributes. -->
+
+```{=latex}
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{c|cc|cc|cc}      
+$Y$  & $a^{*}$  & $b^{*}$  & Mean  & Mode  & Lower 95\% & Upper 95\% \\ \hline
+0  & 2  & 40 & 0.048 & 0.025 & 0.006      & 0.129      \\
+5  & 7  & 35 & 0.167 & 0.150 & 0.072      & 0.292      \\
+10 & 12 & 30 & 0.286 & 0.275 & 0.161      & 0.429      \\
+15 & 17 & 25 & 0.405 & 0.400 & 0.263      & 0.555      \\
+20 & 22 & 20 & 0.476 & 0.525 & 0.374      & 0.671     
+\end{tabular}
+\end{center}
+\caption{The Posterior Distribution Table.}{#tbl-summary}
+\end{table}
+```
+\newpage
+
+Referencing this table created by raw LaTeX code can be tricky. To get the correct reference for @tbl-summary to show up, you need to supply the unique label at the end of the `\caption`. The format is `#`, the item type (`tbl`), the hyphen, and then the unique label (`summary` in this case), all inside `{}` braces. You can also reference sections within your document. Add a `{#sec-label}` header to any section heading on the **Source** side and then reference it with the \@ symbol on the **Visual** side. You can also add the ID attribute under the section heading. For example, the data displayed in @tbl-summary are illustrated using plots made in the @sec-adjplot section.
+
+# Inserting Figures {#sec-figures}
+
+While images generated by the document can be displayed and referenced throughout the document, you can also insert your own custom figures into the document. This is nice, since you can use editing software such as [Inkscape](https://inkscape.org/) to touch up your images before loading them into your document. Inserting images into a RMarkdown file can be frustrating, since you must do preparations of the image such as storing fonts, sizing the image, and edit the figures before importing them. You must also consider the format of the image you are trying to import. Functions that work with one kind of file may not be available or be completely different for another file. @fig-textbook is the textbook I used for the *Applied Bayesian Analysis* course @hoff2009. Notice the citation for the book in-text. Because a reference from the .bib file is cited, it will be displayed in the References section. The biblatex format in the YAML header creates a Bibliography section titled References that includes only the items cited. A reader can click on the citation within the text and be immediately taken to the References section.
+
+![The *Applied Bayesian Analysis* Textbook Cover (Hoff, 2009).](textbookimage.png){#fig-textbook fig-align="center" width="3in"}
+
+When you click on the picture icon at the top, you can then point to the image file you would like to load in. From there, you can also add in a caption to the figure and name it so you can refer to it later. You can also resize @fig-textbook. Click on the image brings up an option where you can resize the figure to meet your needs. Here, I played around resizing @fig-textbook until it looks just right. For example, I changed the default alignment for @fig-textbook from left to center.
+
+Tweaking images also applies to plots created by quarto. One frustrating thing quarto and RMarkdown will do is decide where to place the image within your document. The `fig-pos` option allows you to generally set where the image should be placed. Several options include `ht` for this exact spot here, `t` for top of the page, `b` for bottom of the page, and `p` for the image to be placed on a separate page. You may have to readjust the image, reword some text, and play around with the layout before you find a suitable position for your image. There are tons of layout options beside these if you want to get fancy.
+
+You can also import .pdf files as images. This is a .pdf file with multiple pages and can still be imported into your document. It is clear quarto does not know how to handle .pdf files yet. When you load a .pdf into the **Visual** side, the .pdf does not display. However, if you flip over to the **Source** side, you will notice the correct LaTeX code is given for importing the .pdf file. Even though the image does not display in the **Visual** side, it will be correctly imported into your rendered document.
+
+![The RMarkdown Cheat Sheat.](RMDcheatsheet.pdf){#fig-RMDcheat fig-align="center" width="6in" height="3in"}
+
+In this example, I played around with importing the RMarkdown cheat sheet until it appears the way I like in the rendered document. This can be accomplished by either defining the width and height of the image or by scaling the image to appropriate dimensions. Again, there are many more customization options you can do to size the image to the way you like them to appear. The point is that it is possible to include .pdf files into your RMarkdown document. There is also documentation available to render .svg files too.
+
+By default, for a multi-page .pdf file, only the first page of the file will be loaded into the rendered document. But you can modify this on the **Source** side to specify which page you want to include from the .pdf file by adding in a new option `page=2` after the dimensions are specified. @fig-RMDcheat only displays the first page. As an example, here is the second page of the RMarkdown cheat sheet complete with its own caption and label.
+
+![The RMarkdown Cheat Sheet (page 2).](RMDcheatsheet.pdf){#fig-RMDcheat2 page="2" width="6in" height="3in"}
+
+@fig-RMDcheat and @fig-RMDcheat2 consists of the entire RMarkdown cheat sheet, front and back. By specifying the page number as one of the options, you can import a specific page of a multi-page .pdf file into your rendered document.
+
+## Listings {#sec-list}
+
+By now, you will have most likely have noticed the list of figures and the list of tables has been growing since the inclusion of these examples. Whenever you uniquely identify an item in your quarto document using the `#` notation followed by the item type, quarto will add any new `fig-` or `tbl-` items onto these two lists. You can change whether to display these lists in the YAML header. These new items have a page number that, when clicked, will take the reader directly to the figure or table. The default name of these items is the caption but you can change this by modifying the attributes.
+
+Quarto also has support for things you would normally find in journal publications. It supports .bibtext files for the Bibliography, a Table of Contents, Abstract, and a Title Page. These characteristics are part of how the document is defined so these settings must be controlled using the YAML header.
+
+# Summary {#sec-summary}
+
+Here's a summary of things accomplished in this document:
+
+-   Open a quarto document and render it.
+
+-   Explore options with YAML header to define document features.
+
+    -   Include a Title Page and a Abstract.
+
+    -   Set up a Bibliography.
+
+-   Include both R code and text in one document.
+
+    -   Explore options to customize which R code is displayed.
+
+    -   Code chunk options to modify output.
+
+-   Distinction between the **Visual** side and the **Source** side.
+
+    -   **Visual side:** What the reader will eventually "see".
+
+    -   **Source side:** The R code that will generate the document.
+
+-   Include math equation and symbols.
+
+-   Introduce basic LaTeX syntax.
+
+    -   The `\` symbol and common keywords.
+
+    -   How LaTeX commands can render objects.
+
+-   How to cross-reference items within the document.
+
+    -   The `#` operator for defining items.
+
+    -   The \@ operator for referencing.
+
+-   Include a basic table.
+
+-   Include and modify images imported into quarto.
+
+    -   **Examples:** .png, .pdf
+
+    -   Adding captions, indenting and scaling the image.
+
+-   Include a Bibliography.
+
+    -   Biblatex references with .bib files.
+
+    -   Citing a reference.
