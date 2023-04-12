@@ -1,0 +1,98 @@
+---
+title: "Basic Quarto Document"
+subtitle: "R Users Group - April 2023"
+author: "Stephen Colegate"
+date: "April 12, 2023"
+format: html
+editor: visual
+---
+
+<!--# This is a comment. Insert a comment using CTRL+SHIFT+C. Just like the '#' operator, any code you type here will not be executed between these two marks and will not appear in your rendered final document. -->
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>. All Quarto files in RStudio use the `.qmd` file extension.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. The document can be rendered in HTML (viewable in a web browser), a pdf, or even a Word document. You can embed code like this:
+
+<!--# Use the shortcut CTRL+ALT+I to insert a code block. Specify the type of code you are typing by changing the attributes. -->
+
+```{r}
+1 + 1
+```
+
+<!--# The type of code you insert is very flexible but it should be specified. -->
+
+You can add options to executable code like this
+
+<!--# Some popular options to try: echo, eval, label, fig-cap, fig-align, fig-width, fig-height, fig-pos. -->
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+## Plots
+
+You can add plots to your Quarto documentation:
+
+<!--# Click on the green play button to run just this particular code block. -->
+
+<!--# Clicking on the grey down button executes all the code blocks before it. -->
+
+```{r}
+#| label: fig-basicplot
+data(cars)
+plot(cars$speed, cars$dist)
+```
+
+We can clean up this plot and make it look nicer. Because this requires quite a bit of R code, we should hide it.
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-pos: ht
+#| fig-cap: "Distance versus Speed Relationship of 50 cars from the 1920s."
+#| fig-cap-location: bottom
+#| label: fig-cars
+#| echo: false
+plot(cars$speed, cars$dist, main="Distance versus Speed",
+     sub="The cars Dataset", xlab="Speed", ylab="Distance",
+     pch=16, col="red")
+```
+
+Here's an example of how to use R results within your document: The average speed of all these cars is `r round(mean(cars$speed),1)` mph. When you click on Render, this R code will be replaced with the correct result, rounded to 1 decimal place.
+
+Use \`r\` to insert inline R code. For example, `r round(median(cars$dist),2)` ft. is the median distance. This is handy if your data set changes but the *result* needed here stays the same.
+
+## Tables
+
+Here's an example of a simple table:
+
+|          |  n  |             Mean              |             Median              |
+|-------------------|:----------------:|:----------------:|:----------------:|
+| Distance | 50  | `r round(mean(cars$dist),2)`  | `r round(median(cars$dist),2)`  |
+| Speed    | 50  | `r round(mean(cars$speed),1)` | `r round(median(cars$speed),1)` |
+
+: The Cars Table {#tbl-cars}
+
+We can cross-reference within the document. For example, compare the mean and median from the table to @fig-cars. Notice the label `fig-cars` was specified in the R code block above. When we Render the document, we can then reference the plot. The reference stays with the plot, even if it gets moved. Try this by moving the R code block of the plot before @fig-basicplot and click on Render again - the Figure label of the two plots should get switched.
+
+Tables can be tricky to cross-reference. The `tbl-ref` goes at the end of the table caption. See the Source side. We can then reference the table, @tbl-cars once we click on Render like we did with the plot.
+
+Figures, Tables, Equations, Headings, References can be cross-referenced in this way. For example, let $F$ be the antiderivative of a function $f$:
+
+$$
+\int_{a}^{b}f(x) \, dx = F(b)-F(a)
+$$ {#eq-FTC}
+
+The Fundamental Theorem of Calculus is given by @eq-FTC.
+
+## Learn More
+
+For more examples, see my `quarto_document.qmd` file posted on GitHub [here](https://github.com/CCHMC-RUG/intro-to-quarto).
